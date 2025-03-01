@@ -4,10 +4,24 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for the specific client URL
+// Enable CORS only for the Dice Roller static site
+const allowedOrigins = ['https://nice-ocean-0f4f77210.4.azurestaticapps.net'];
+
 app.use(cors({
-    origin: 'https://nice-ocean-0f4f77210.4.azurestaticapps.net'  // Allow the dice roller client domain
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS Not Allowed'));
+        }
+    }
 }));
+
+// Middleware to log requests
+app.use((req, res, next) => {
+    console.log(`Received request: ${req.method} ${req.url}`);
+    next();
+});
 
 // RESTful API endpoint for generating a dice roll
 app.get('/api/roll-dice', (req, res) => {
