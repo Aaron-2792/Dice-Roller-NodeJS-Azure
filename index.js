@@ -23,6 +23,11 @@ app.use((req, res, next) => {
     next();
 });
 
+// ✅ **Root test route** (Add this)
+app.get('/', (req, res) => {
+    res.send('Server is running! Use /api/roll-dice to roll the dice.');
+});
+
 // RESTful API endpoint for generating a dice roll
 app.get('/api/roll-dice', (req, res) => {
     const diceRoll = Math.floor(Math.random() * 6) + 1; // 6-sided die roll
