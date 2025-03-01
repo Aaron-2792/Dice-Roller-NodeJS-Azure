@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+</head>
+<body>
+    <h1>Test Dice Roller API</h1>
+    <button onclick="testAPI()">Call API</button>
+    <p id="result">Click the button to test.</p>
+
+    <script>
+        async function testAPI() {
+            try {
+                // Update the URL to point to the correct server API endpoint
+                let response = await fetch('https://dice-roller-server-ggdvfdg3bhajbvgm.northcentralus-01.azurewebsites.net/api/roll-dice');
+                let data = await response.json();
+                document.getElementById('result').innerText = `Server rolled: ${data.roll}`;
+            } catch (error) {
+                console.error('API request failed:', error);
+            }
+        }
+    </script>
+</body>
+</html>
